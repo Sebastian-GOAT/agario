@@ -1,4 +1,4 @@
-import { Button } from 'tscratch';
+import { Button, TSCMath } from 'tscratch';
 import { conn, color } from '@/global.ts';
 import { text } from '@/sprites/main.ts'
 
@@ -26,7 +26,7 @@ export const btnStart = new Button({
 });
 
 btnCreate.onPress(() => {
-    conn.createRoom({ color });
+    conn.createRoom({ color, radius: 50 });
     conn.onRoomJoin(() => {
         console.log(conn.roomId);
         text.setContent(`Room ID: ${conn.roomId}`);
@@ -40,7 +40,7 @@ btnJoin.onPress(() => {
     const input = prompt('Please enter the room ID.');
     if (!input) return;
 
-    conn.joinRoom(input, { color });
+    conn.joinRoom(input, { color, radius: 75 });
     conn.onRoomJoin(() => {
         text.setContent('Waiting for host...');
         btnCreate.hide();
@@ -50,8 +50,6 @@ btnJoin.onPress(() => {
 btnStart.onPress(() => {
 
     if (!conn.roomId) return;
-
-    // Stop other connections ?????
-
     conn.emit('startGame', null);
+    
 }, { allowHold: false });

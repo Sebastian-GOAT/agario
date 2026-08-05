@@ -4,23 +4,27 @@ import { player } from '@/sprites/main.ts';
 
 const engine = Engine.init();
 
+const invalid = () => !conn.roomId ||
+                    engine.currentScene !== 'game' ||
+                    !conn.getRoomPlayerState().alive;
+
 engine.onKeyPress('w', () => {
-    if (!conn.roomId || engine.currentScene !== 'game') return;
+    if (invalid()) return;
     player.changeY(+speed);
     conn.updatePlayerState({ y: player.y });
 });
 engine.onKeyPress('a', () => {
-    if (!conn.roomId || engine.currentScene !== 'game') return;
+    if (invalid()) return;
     player.changeX(-speed);
     conn.updatePlayerState({ x: player.x });
 });
 engine.onKeyPress('s', () => {
-    if (!conn.roomId || engine.currentScene !== 'game') return;
+    if (invalid()) return;
     player.changeY(-speed);
     conn.updatePlayerState({ y: player.y });
 });
 engine.onKeyPress('d', () => {
-    if (!conn.roomId || engine.currentScene !== 'game') return;
+    if (invalid()) return;
     player.changeX(+speed);
     conn.updatePlayerState({ x: player.x });
 });

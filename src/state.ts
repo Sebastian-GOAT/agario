@@ -4,4 +4,5 @@ export interface PlayerState {
     color: string;
     radius: number;
     kills: number;
+    alive: boolean;
 }

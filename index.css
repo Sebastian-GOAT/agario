@@ -12,6 +12,7 @@ body {
     max-width: 90%;
     position: absolute;
     border: 2px solid black;
+    border-radius: 0.3rem;
     touch-action: none;
 }
 
