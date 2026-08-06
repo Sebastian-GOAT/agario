@@ -1,8 +1,9 @@
-import { Circle, Engine, Pen, Text, Watermark } from 'tscratch';
+import { Circle, Engine, Pen } from 'tscratch';
 import './events/controls.ts';
 import startGame from './logic/start-game.ts';
-import { pen, text } from './sprites/main.ts';
+import { deathText, pen, text } from './sprites/main.ts';
 import { conn, baseRadius } from './global.ts';
+import { updateLeaderboard } from './sprites/leaderboard.ts';
 
 const engine = Engine.init();
 engine.setScene('lobby');
@@ -38,14 +39,10 @@ engine.setLoop('game', () => {
         });
     }
 
-    // Render the kill count
+    // Render the kill count & leaderboard
     text.setContent(`Kills: ${playerState.kills}`);
+    updateLeaderboard();
 
     // Show a death message if eliminated
-    if (!playerState.alive) {
-        Pen.drawSprite(Text, {
-            content: 'You have been eliminated...',
-            fontSize: 32
-        });
-    }
+    if (!playerState.alive) deathText.show();
 });

@@ -1,4 +1,4 @@
-import { Button, TSCMath } from 'tscratch';
+import { Button } from 'tscratch';
 import { conn, color } from '@/global.ts';
 import { text } from '@/sprites/main.ts'
 

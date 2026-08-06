@@ -5,8 +5,12 @@ import onSwallow from './logic/eating.ts';
 const server = new Server({ port: 3000 });
 const rm = new RoomManager<PlayerState>({
     server,
-    defaultPlayerState: { x: 0, y: 0, color: 'red', radius: 35, kills: 0, alive: true },
+    defaultPlayerState: { x: 0, y: 0, color: 'red', username: 'guest', radius: 35, kills: 0, alive: true },
     allowedPlayerState: ['x', 'y', 'color', 'radius']
+});
+
+rm.onJoin(client => {
+    rm.updatePlayerState(client.id, { username: `player_${Math.floor(Math.random() * 999) + 1}` });
 });
 
 rm.onPlayerStateUpdate(client => {
