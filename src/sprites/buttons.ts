@@ -1,4 +1,4 @@
-import { Button } from 'tscratch';
+import { Button, Engine } from 'tscratch';
 import { conn, color } from '@/global.ts';
 import { text } from '@/sprites/main.ts'
 
@@ -29,10 +29,15 @@ btnCreate.onPress(() => {
     conn.createRoom({ color, radius: 50 });
     conn.onRoomJoin(() => {
         console.log(conn.roomId);
-        text.setContent(`Room ID: ${conn.roomId}`);
         btnCreate.hide();
         btnJoin.hide();
         btnStart.show();
+
+        // Render the player count in the lobby (show only to the host)
+        Engine.init().setLoop('lobby', () => {
+            if (!conn.roomId) return;
+            text.setContent(`Room ID: ${conn.roomId}    Players: ${conn.roomClients.size}`);
+        });
     });
 }, { allowHold: false });
 btnJoin.onPress(() => {
